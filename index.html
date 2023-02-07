@@ -11,6 +11,13 @@
 
         <link rel="stylesheet" href="assets/css/style.css" />
 
+        <!-- Link the DayJS library -->
+        <script
+        src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+        integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+        crossorigin="anonymous"
+        ></script>
+
         <title>Weather Dashboard</title>
     </head>
 
@@ -22,20 +29,22 @@
         <div class="container">
             <!-- -------------------------------------------SEARCH BAR----------------------------------------- -->
             <div class="row">
-                <div id="searchBar" class="col-4">
+                <div id="searchBar" class="col-3">
                     <h3>Search for a city:</h3>
                     <input id="cityName" class="form-control" type="text" 
                     placeholder="Enter city name..." 
                     aria-label="city name input">
                     <button id="searchBTN">Search</button>
                 </div>
+
+                <!-- -----------------------WEATHER INFO CARD------------------------------------- -->
+                <div id="cardContainer" class="col"></div>
+
             </div>
         </div>
 
-        <div id="cardContainer">
-            
-        </div>
-
+        
+        <!-- link to JQUERY -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="assets/js/script.js"></script>
     </body>

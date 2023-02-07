@@ -4,10 +4,12 @@ var searchBtnEL = document.getElementById("searchBTN");
 var cardContEL = document.getElementById("cardContainer");
 
 // assign API to a variable
-const APIKey = '9cfe7036b90b3a13af1a88f6bf534b32';
+const APIKey = '0396888a07439c5f30eb317dbdc6b0f4';
 //history array
 var searchHistory = [];
 var weatherData;
+
+getPastCity();
 
 function findCity(city) {
     searchHistory.push(city);
@@ -19,18 +21,42 @@ function findCity(city) {
         var forecastURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&exclude=minutely&appid=${APIKey}&units=imperial`;
         fetch(forecastURL)
         .then(response=>response.json())
-        .then(data=>localStorage.setItem("weather", JSON.stringify(data)))
+        .then(data=> {
+            clearcontent("cardContainer");
+            var weatherCard = generateWeatherCard(data);
+            console.log(data)
+            cardContEL.append(weatherCard);
+            localStorage.setItem("weather", JSON.stringify(data))
+        })
     })
+}
+
+//clear container for next search
+function clearcontent(elementID) {
+    document.getElementById(elementID).innerHTML = "";
+}
+
+// Were calling above to get past weather data once app has started
+function getPastCity() {
     weatherData = JSON.parse(localStorage.getItem("weather"));
-    console.log(weatherData);
-    var weatherCard = generateWeatherCard(weatherData);
-    cardContEL.append(weatherCard);
 }
 
 function generateWeatherCard(weatherInfo) {
+    var cardDiv = document.createElement("div");
     var cardHeader = document.createElement("h1");
-    cardHeader.innerText = weatherInfo.current.temp;
-    return cardHeader;
+    var today = dayjs().format('MMM D, YYYY');
+    cardHeader.innerText = inputEL.value + " " + today;
+    var cardPara = document.createElement("pre");
+    const node1 = document.createTextNode("Temperature: " + weatherInfo.current.temp + "°F" 
+    + "\nHumidity: " + weatherInfo.current.humidity + "%"
+    + "\nWind Speed: " + weatherInfo.current.wind_speed + " MPH");
+    
+    cardPara.appendChild(node1);
+
+    cardDiv.appendChild(cardHeader);
+    cardDiv.appendChild(cardPara);
+
+    return cardDiv;
 }
 
 $("#searchBTN").click(function() {
