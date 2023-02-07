@@ -4,7 +4,7 @@ var searchBtnEL = document.getElementById("searchBTN");
 var cardContEL = document.getElementById("cardContainer");
 
 // assign API to a variable
-const APIKey = '0396888a07439c5f30eb317dbdc6b0f4';
+const APIKey = '7423690088d431deeb7881c189cccd22';
 //history array
 var searchHistory = [];
 var weatherData;
@@ -24,8 +24,9 @@ function findCity(city) {
         .then(data=> {
             clearcontent("cardContainer");
             var weatherCard = generateWeatherCard(data);
-            console.log(data)
             cardContEL.append(weatherCard);
+            generateForecast(data);
+            console.log(data)
             localStorage.setItem("weather", JSON.stringify(data))
         })
     })
@@ -41,6 +42,24 @@ function getPastCity() {
     weatherData = JSON.parse(localStorage.getItem("weather"));
 }
 
+function generateForecast(weather) {
+    for(var i = 1; i < 6; i++) {
+        var cardDiv = document.createElement("div");
+        cardDiv.classList.add("col-md-6");
+        var cardHeader = document.createElement("h5");
+        cardHeader.innerText = dayjs.unix(weather.daily[i].dt).format('MMM D, YYYY'); 
+        var cardPara = document.createElement("pre");
+        const node1 = document.createTextNode("Temperature: " + weather.daily[i].temp.day + "°F" 
+        + "\nHumidity: " + weather.daily[i].humidity + "%");
+
+        cardPara.appendChild(node1);
+
+        cardDiv.appendChild(cardHeader);
+        cardDiv.appendChild(cardPara);
+        cardContEL.append(cardDiv);
+    }
+}
+
 function generateWeatherCard(weatherInfo) {
     var cardDiv = document.createElement("div");
     var cardHeader = document.createElement("h1");
@@ -50,7 +69,7 @@ function generateWeatherCard(weatherInfo) {
     const node1 = document.createTextNode("Temperature: " + weatherInfo.current.temp + "°F" 
     + "\nHumidity: " + weatherInfo.current.humidity + "%"
     + "\nWind Speed: " + weatherInfo.current.wind_speed + " MPH");
-    
+
     cardPara.appendChild(node1);
 
     cardDiv.appendChild(cardHeader);

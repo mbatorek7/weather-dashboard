@@ -25,7 +25,7 @@ THEN I am again presented with current and future conditions for that city
 
 
 <p align="center">
-    <a href="https://mbatorek7.github.io/hw5-workday-scheduler/"><img src="https://img.shields.io/badge/-See Live Site-success?style=for-the-badge"  alt="Live Site" ></a>
+    <a href="https://mbatorek7.github.io/hw6-weather-dashboard/"><img src="https://img.shields.io/badge/-See Live Site-success?style=for-the-badge"  alt="Live Site" ></a>
 </p>
 
 ### Screenshots
