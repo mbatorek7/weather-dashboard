@@ -10,3 +10,22 @@ html {
 h1 {
     text-align: center;
 }
+
+pre {
+    text-align: center;
+}
+
+.grid-container-element { 
+    margin-top: 50px;
+    margin-left: 25%;
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
+    grid-gap: 5px; 
+    border: 1px; 
+    width: 60%; 
+} 
+
+.grid-child-element { 
+    margin: 10px; 
+    border: 1px; 
+}

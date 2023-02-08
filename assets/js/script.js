@@ -2,6 +2,7 @@
 var inputEL = document.getElementById("cityName");
 var searchBtnEL = document.getElementById("searchBTN");
 var cardContEL = document.getElementById("cardContainer");
+var forecastContEL = document.getElementById("forecastContainer");
 
 // assign API to a variable
 const APIKey = '7423690088d431deeb7881c189cccd22';
@@ -45,7 +46,7 @@ function getPastCity() {
 function generateForecast(weather) {
     for(var i = 1; i < 6; i++) {
         var cardDiv = document.createElement("div");
-        cardDiv.classList.add("col-md-6");
+        cardDiv.classList.add("grid-child-element");
         var cardHeader = document.createElement("h5");
         cardHeader.innerText = dayjs.unix(weather.daily[i].dt).format('MMM D, YYYY'); 
         var cardPara = document.createElement("pre");
@@ -56,7 +57,7 @@ function generateForecast(weather) {
 
         cardDiv.appendChild(cardHeader);
         cardDiv.appendChild(cardPara);
-        cardContEL.append(cardDiv);
+        forecastContEL.append(cardDiv);
     }
 }
 
