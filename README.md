@@ -22,7 +22,7 @@ WHEN I click on a city in the search history
 THEN I am again presented with current and future conditions for that city
 ```
 ## Description
-
+In this application the user will be able to search the current and future weather for any city. Their previous searches will also be displayed underneath the search bar. If the user decides to go back to a previous search, they can click on that city's button. The user can also clear some of it's older search history items by pressing the clear search button.
 
 <p align="center">
     <a href="https://mbatorek7.github.io/hw6-weather-dashboard/"><img src="https://img.shields.io/badge/-See Live Site-success?style=for-the-badge"  alt="Live Site" ></a>
@@ -30,6 +30,6 @@ THEN I am again presented with current and future conditions for that city
 
 ### Screenshots
 
-![Final deployment of the web application.](./Assets/images/starter.png)
+![Final deployment of the web application.](./assets/images/main-page.png)
 
-![Final deployment of the web application.](./Assets/images/final-product.gif)
+![Final deployment of the web application.](./assets/images/final-product.png)
