@@ -12,12 +12,13 @@ const APIKey = '7423690088d431deeb7881c189cccd22';
 var searchHistory = [];
 var weatherData;
 
-getPastCity();
-
 function findCity(city) {
     city_name = city;
     //add city name to search history
-    searchHistory.push(city);
+    //but check if it was already added first
+    if(searchHistory.indexOf(city) == -1) {
+        searchHistory.push(city);
+    }
     //create link to weather API to obtain data
     var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
 
@@ -42,8 +43,6 @@ function findCity(city) {
             localStorage.setItem("weather", JSON.stringify(data))
         })
     })
-    //save search history to local storage
-    //saveSearch();
 }
 
 //clear container for next search
@@ -52,30 +51,31 @@ function clearcontent(elementID) {
 }
 
 function createButtons() {
+    //set past searches equal to previous search or empty if null
     var pastSearch = JSON.parse(localStorage.getItem("searchHistory"))||[];
+    //clear btn container
     btnContEL.innerHTML = "";
+    //create for loop that'll create a button for each unique search history name
     for(var i = 0; i < pastSearch.length; i++) {
+        //create a btn element
         var btn = document.createElement("button");
+        //set it equal to previous search
         btn.textContent = pastSearch[i];
         btn.classList.add("pastCityBtn");
+        btn.classList.add("button-51");
+        btn.setAttribute("id", "pastCityBtn");
+        //when btn is clicked get the city name and find city
         btn.onclick = function(event){
             findCity(event.target.textContent)
         }
+        //add this new btn to the container
         btnContEL.append(btn);
-        // document.querySelector(".pastCityBtn").addEventListener("click", function(event){
-        //     findCity(event.target.textContent)
-        // })
     }
 }
 
 //save past searches
 var saveSearch = function(){
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
-};
-
-// Were calling above to get past weather data once app has started
-function getPastCity() {
-    weatherData = JSON.parse(localStorage.getItem("weather"));
 }
 
 function generateForecast(weather) {
@@ -85,8 +85,11 @@ function generateForecast(weather) {
         cardDiv.classList.add("grid-child-element");
         cardDiv.setAttribute("style", "background-color: lightblue;");
 
-        var iconCode = weather.current.weather[0].icon;
+        //grab the icon code
+        var iconCode = weather.daily[i].weather[0].icon;
+        //grab the URL
         var iconURL = `https://openweathermap.org/img/w/${iconCode}.png`;
+        //create img for the icon
         var icon = document.createElement("img");
         icon.setAttribute("src", iconURL);
 
@@ -119,7 +122,7 @@ function generateWeatherCard(weatherInfo) {
     //create header that capitalizes the search input and displays today's date
     var cardHeader = document.createElement("h1");
     var today = dayjs().format('MMM D, YYYY');
-    cardHeader.innerText = city_name + " " + today;
+    cardHeader.innerText = city_name.toUpperCase() + " " + today;
 
     var iconCode = weatherInfo.current.weather[0].icon;
     var iconURL = `https://openweathermap.org/img/w/${iconCode}.png`;
@@ -143,9 +146,22 @@ function generateWeatherCard(weatherInfo) {
     return cardDiv;
 }
 
+function removeBtn() {
+    //get first past city btn in search history array
+    var elem = document.getElementById("pastCityBtn");
+    //remove the btn
+    elem.parentNode.removeChild(elem);
+}
+
 //find city when search button is pressed
 $("#searchBTN").click(function() {
     findCity(inputEL.value);
     saveSearch();
     createButtons();
+})
+
+//find city when search button is pressed
+$("#clearBtn").click(function() {
+    localStorage.clear();
+    removeBtn();
 })
